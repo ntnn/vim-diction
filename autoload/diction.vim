@@ -89,7 +89,7 @@ function s:parse_line(line) abort
         " TODO: Some annotations are extremely long. Make those
         "       multiline
         call add(ret, printf("%s:%d:%d:%s",
-                    \   file, cur_lnum, cur_col, lines[nextopen:nextclose]))
+                    \   file, cur_lnum, cur_col, lines[nextopen + 1:nextclose - 1]))
 
         let lines = lines[nextclose + 2:]
         "                           +- cut off the ] and space that'd be left over
