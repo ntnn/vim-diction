@@ -86,6 +86,8 @@ function s:parse_line(line) abort
         call s:log('Next open: ' . nextopen . ' close: ' . nextclose)
 
         let [cur_lnum, cur_col] = s:calculate_lnumcol(file, cur_lnum, cur_col, nextopen)
+        " TODO: Some annotations are extremely long. Make those
+        "       multiline
         call add(ret, printf("%s:%d:%d:%s",
                     \   file, cur_lnum, cur_col, lines[nextopen:nextclose]))
 
