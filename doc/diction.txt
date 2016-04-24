@@ -1,0 +1,73 @@
+*diction.txt*	For Vim Version 7.4 and up	Last change: 2016 Apr 24
+
+			VIM-DICTION DOCUMENTATION by Nelo-T. Wallus
+
+Help on using vim-diction                                             *diction*
+
+    1. Introduction ............................... |diction-intro|
+    2. Configuration .............................. |diction-configuration|
+    3. Usage ...................................... |diction-usage|
+
+==============================================================================
+ 1. INTRODUCTION                                                *diction-intro*
+
+From the man page: >
+    Diction finds all sentences in a document that contain phrases  from  a
+    database  of  frequently  misused,  bad  or  wordy diction.  It further
+    checks for double words.
+<
+This plugin passes the file and options to diction, parses the output to show
+each annotation with the respective line and column number and displays it in
+the quickfix or location list.
+
+==============================================================================
+ 1. CONFIGURATION                                       *diction-configuration*
+
+Available mappings:
+
+    <Plug>Diction ............................. |:Diction|
+    <Plug>LDiction ............................ |:LDiction|
+
+Available options:
+    diction_options ........................... |diction_options|
+    diction_suggest ........................... |diction_suggest|
+    diction_debug ............................. |diction_debug|
+
+------------------------------------------------------------------------------
+                                                           *'diction_options'*
+Value: string ~
+Default: unset ~
+
+String to pass to diction.
+
+------------------------------------------------------------------------------
+                                                            *'diction_suggest'*
+Value: numeric ~
+Default: unset (1) ~
+
+Pass '--suggest' to diction.
+
+------------------------------------------------------------------------------
+                                                               *'diction_debug'*
+Value: numeric ~
+Default: unset (0) ~
+
+Print debug messages.
+
+Attention: Verbose and a lot.
+
+==============================================================================
+ 3. USAGE                                                        *diction-usage*
+
+The following commands are available:
+
+*:Diction*
+
+Run diction on the current file and parse the output, displaying the result in
+the |quickfix| list.
+
+*:LDiction*
+
+Like |:Diction|, displaying the result in the |location-list|.
+
+ vim:tw=78:ts=8:ft=help:norl:
