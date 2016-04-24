@@ -86,10 +86,19 @@ function s:parse_line(line) abort
         call s:log('Next open: ' . nextopen . ' close: ' . nextclose)
 
         let [cur_lnum, cur_col] = s:calculate_lnumcol(file, cur_lnum, cur_col, nextopen)
-        " TODO: Some annotations are extremely long. Make those
-        "       multiline
-        call add(ret, printf("%s:%d:%d:%s",
-                    \   file, cur_lnum, cur_col, lines[nextopen + 1:nextclose - 1]))
+        let annotation = lines[nextopen + 1:nextclose - 1]
+
+        if get(g:, 'diction_formatter') != ''
+            let output = split(system(g:diction_formatter, annotation), '\n')
+        else
+            let output = [annotation]
+        endif
+
+        call add(ret, printf("%s:%d:%d:%s", file, cur_lnum, cur_col, output[0]))
+        call remove(output, 0)
+        for line in output
+            call add(ret, line)
+        endfor
 
         let lines = lines[nextclose + 2:]
         "                           +- cut off the ] and space that'd be left over
