@@ -1,0 +1,19 @@
+Version: 2
+Commands:
+    *
+
+Mappings:
+    *
+
+Options:
+    *
+
+To Dos:
+    * Allow ranges to pass those through to diction via stdin.
+      In that case an offset has to be given to calculate_lnumcol
+    * Allow different / multiple files
+    * Some annotations are extremely long. Make those
+      multiline
+    * For some reason the calculated lnum/col are a few characters
+      off, sometimes positive, sometimes negative
+    * Better way to remove leading and trailing whitespace
