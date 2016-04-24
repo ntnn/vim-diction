@@ -32,6 +32,7 @@ Available options:
     diction_options ........................... |diction_options|
     diction_suggest ........................... |diction_suggest|
     diction_debug ............................. |diction_debug|
+    diction_formatter ......................... |diction_formatter|
 
 ------------------------------------------------------------------------------
                                                            *'diction_options'*
@@ -55,6 +56,20 @@ Default: unset (0) ~
 Print debug messages.
 
 Attention: Verbose and a lot.
+
+------------------------------------------------------------------------------
+                                                          *'diction_formatter'*
+Value: string ~
+Default: unset (`fmt -t` or &formatprg) ~
+
+External program to format long lines into readable output.
+
+If neither 'diction_formatter' nor 'formatprg' are set, fmt from coreutils
+is used, if it is available.
+
+Example: >
+    let g:diction_formatter = 'fmt t'
+<
 
 ==============================================================================
  3. USAGE                                                        *diction-usage*
