@@ -1,3 +1,25 @@
+Version: 2
+
+Rewrite. Doesn't use `diction` anymore.
+Using a similar database format (tsv) is simpler than parsing the output
+of diction and also enables vim-diction to ship with multiple databases
+by default.
+
+New Commands:
+    * DictionLog
+
+New Options:
+    * diction_formatter
+    * diction_databases
+
+To Dos:
+    * Allow ranges to pass those through to
+    * Command to add to existing qf/loclist
+
+Removed:
+    * diction_options
+    * diction_suggest
+
 Version: 1
 Commands:
     * Diction
