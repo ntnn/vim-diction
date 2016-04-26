@@ -7,7 +7,7 @@ Help on using vim-diction                                             *diction*
     1. Introduction ............................... |diction-intro|
     2. Configuration .............................. |diction-configuration|
     3. Usage ...................................... |diction-usage|
-    4. Database Layout ............................ |diction-database|
+    4. Database ................................... |diction-database|
 
 ==============================================================================
  1. INTRODUCTION                                                *diction-intro*
@@ -78,34 +78,36 @@ Saves output of |:messages| in `vim-diction.log`. Intended to be used with
 |'diction_debug'|.
 
 ==============================================================================
- 4. DATABASE LAYOUT                                          *diction-database*
+ 4. DATABASE                                                 *diction-database*
 
-The databases are tsv (tab separated values) files with one or two columns per
-line.
+The databases are tsv (tab separated values) files. Each line can either be an
+entry or ignored. Ignored lines are comments (1) or empty lines (2).
+Entries are either one value (the diction, 3) or two values (diction and
+annotation, 4).
 
-Every line in a database has either one or two values or is a comment:
-Layout: >
-    # comment
-    of\scourse	Explain why explicitly instead of implicitly. Also helps to avoid errors.
-    simply
+Example: >
+    1 # comment
+    2
+    3 simply
+    4 of course	Explain why explicitly instead of implicitly. Also helps to avoid errors.
 <
-Comments and empty lines are ignored by vim-diction. The first value is the
-diction to match and the second the annotation to the diction.
 
-A diction should always be accompanied by an annotation and by
-a reference (Hyperlink, book reference, et cetera) in a comment to the
-source and deeper explanation.
-If a whole database or group descends from one article a single reference at
+A diction should always be accompanied by an annotation and a reference
+(Hyperlink, book reference, et cetera) in a comment to the source and deeper
+explanation.
+If a whole database or group is based on one article, a single reference at
 the top of the database or grouping is sufficient.
 
-Dictions are pattern-matched with |'ignorecase'| (|/\c|) and enclose in |\<|
-and |\>|, |/\c|. To match a diction with whitespace use |\s|.
-See |pattern-overview| for more information.
+Dictions are pattern-matched with |'ignorecase'| (|/\c|) and may contain
+spaces. Spaces are matched as |[:blank:]| and |/\r|.
+In example line 4 matches >
+    this is of course a profitable
+< as well as >
+    taking this course is of
+    course a long planned
+<
 
 Annotations should be a single, short sentence giving context to when and how
 the diction is bad. If possible also an example.
-
-
-
 
 /* vim:tw=78:ts=8:ft=help:norl: */
