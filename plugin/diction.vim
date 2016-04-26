@@ -5,7 +5,8 @@
 " Website:	https://github.com/ntnn/vim-diction
 
 if !executable('diction')
-    echomsg "Diction could not be found. Disabling vim-diction"
+    echomsg "Diction could not be found in your path - please check that you installed it correctly"
+    echomsg "Disabling vim-diction"
     finish
 endif
 
