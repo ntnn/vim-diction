@@ -7,22 +7,20 @@ Help on using vim-diction                                             *diction*
     1. Introduction ............................... |diction-intro|
     2. Configuration .............................. |diction-configuration|
     3. Usage ...................................... |diction-usage|
+    4. Database Layout ............................ |diction-database|
 
 ==============================================================================
  1. INTRODUCTION                                                *diction-intro*
 
-This plugin needs 'diction' installed, this can either be done through
-your distributions' package manager or you can grab a copy here:
-https://www.gnu.org/software/diction/diction.html
+ diction, noun: >
+    choice of words especially with regard to correctness, clearness, or effectiveness
 
-From the man page: >
-    Diction finds all sentences in a document that contain phrases  from  a
-    database  of  frequently  misused,  bad  or  wordy diction.  It further
-    checks for double words.
+    source: Merriam-Webster, 2016
 <
-This plugin passes the file and options to diction, parses the output to show
-each annotation with the respective line and column number and displays it in
-the quickfix or location list.
+
+vim-diction parses one or multiple database determined by
+|'diction_databases'|, looks for bad diction and fills the quickfix list with
+explanations and suggestions.
 
 ==============================================================================
  1. CONFIGURATION                                       *diction-configuration*
@@ -33,27 +31,12 @@ Available mappings:
     <Plug>LDiction ............................ |:LDiction|
 
 Available options:
-    diction_options ........................... |diction_options|
-    diction_suggest ........................... |diction_suggest|
-    diction_debug ............................. |diction_debug|
-    diction_formatter ......................... |diction_formatter|
+    diction_debug ............................. |'diction_debug'|
+    diction_formatter ......................... |'diction_formatter'|
+    diction_databases ......................... |'diction_databases'|
 
 ------------------------------------------------------------------------------
-                                                           *'diction_options'*
-Value: string ~
-Default: unset ~
-
-String to pass to diction.
-
-------------------------------------------------------------------------------
-                                                            *'diction_suggest'*
-Value: numeric ~
-Default: unset (1) ~
-
-Pass '--suggest' to diction.
-
-------------------------------------------------------------------------------
-                                                               *'diction_debug'*
+                                                              *'diction_debug'*
 Value: numeric ~
 Default: unset (0) ~
 
@@ -74,9 +57,23 @@ is used, if it is available.
 Example: >
     let g:diction_formatter = 'fmt t'
 <
+------------------------------------------------------------------------------
+                                                          *'diction_databases'*
+Value: list ~
+Default: unset (shipped databases) ~
+
+List of databases to parse. vim-diction always parses shipped databases in
+alphabetical order first and then user-defined.in the given order.
+
+Example: >
+    let g:diction_databases = [
+                \ '/usr/share/diction/en',
+                \ '~/gitted_conf/diction'
+                \ ]
+<
 
 ==============================================================================
- 3. USAGE                                                        *diction-usage*
+ 3. USAGE                                                       *diction-usage*
 
 The following commands are available:
 
@@ -94,4 +91,27 @@ Like |:Diction|, displaying the result in the |location-list|.
 Saves output of |:messages| in 'vim-diction.log'. Intended to be used with
 |'diction_debug'|.
 
- vim:tw=78:ts=8:ft=help:norl:
+==============================================================================
+ 4. DATABASE LAYOUT                                          *diction-database*
+
+The databases are tsv (tab separated values) files with one or two colums per
+line.
+
+Every line in a database has either one or two values or is a comment:
+Layout: >
+    # comment
+    of\scourse	Explain why explicitly instead of implicitly. Also helps to avoid errors.
+    simply
+<
+Comments are ignored by vim-diction. The first value is the diction to match
+and the second the explanation and/or suggestion.
+
+A diction should always come with some kind of suggestion or explanation and
+also be accompanied by a commented reference (hyperlink, book reference, etc)
+to the source and deeper explanation.
+
+Dictions are pattern-matched enclosed in |\<| and |\>|. To match a diction
+with whitespace like above include |\s| in the pattern.
+See |pattern-overview| for more information.
+
+/* vim:tw=78:ts=8:ft=help:norl: */

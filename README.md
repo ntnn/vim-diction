@@ -1,12 +1,10 @@
-From dictions man page:
-`diction` finds all sentences in a document that contain phrases  from
-a database  of  frequently  misused,  bad  or  wordy diction.
+diction, noun:
+    choice of words especially with regard to correctness, clearness, or effectiveness
 
-This plugin needs 'diction' installed, this can either be done through
-your distributions' package manager or you can grab a copy [here](https://www.gnu.org/software/diction/diction.html).
+    source: Merriam-Webster, 2016
 
-This small plugin wraps diction and parses the output to display it in
-the quickfix or location list.
+vim-diction parses one or multiple database determined by, looks for bad
+diction and fills the quickfix list with explanations and suggestions.
 
 For more information read the documentation `:h diction.txt`.
 
