@@ -17,7 +17,6 @@ Diction, noun: >
 
     source: Merriam-Webster, 2016
 <
-
 vim-diction parses databases determined by |'diction_databases'|, looks
 for bad diction and fills the quickfix list with explanations and
 suggestions.
@@ -67,7 +66,6 @@ Example: >
                 \ '~/gitted_conf/diction'
                 \ ]
 <
-
 ==============================================================================
  3. USAGE                                                       *diction-usage*
 
@@ -91,7 +89,6 @@ Saves output of |:messages| in `vim-diction.log`. Intended to be used with
 
 Reindex the databases in |'diction_databases'|.
 
-
 ==============================================================================
  4. DATABASE                                                 *diction-database*
 
@@ -106,7 +103,6 @@ Example: >
     3 simply
     4 of course	Explain why explicitly instead of implicitly. Also helps to avoid errors.
 <
-
 A diction should always be accompanied by an annotation and a reference
 (Hyperlink, book reference, et cetera) in a comment to the source and deeper
 explanation.
@@ -121,7 +117,6 @@ In example line 4 matches >
     taking this course is of
     course a long planned
 <
-
 Annotations should be a single, short sentence giving context to when and how
 the diction is bad. If possible also an example.
 

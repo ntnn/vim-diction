@@ -14,8 +14,10 @@ set cpo&vim
 
 command Diction call diction#fill_list(1)
 nnoremap <silent> <Plug>Diction :Diction<cr>
+
 command LDiction call diction#fill_list(0)
 nnoremap <silent> <Plug>LDiction :LDiction<cr>
+
 command DictionLog call diction#write_log_to_file()
 command DictionIndex call diction#reindex()
 
