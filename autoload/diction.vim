@@ -68,10 +68,12 @@ function s:parse_line(line) abort
     " split input line into filename, line/column numbers and sentence
     let lines = split(a:line, ':')
     let file = lines[0]
-    if len(split(lines[1], '[\.\-]')) == 4
-        let [start_lnum, start_col, end_lnum, end_col] = split(lines[1], '[\.\-]')
+
+    let lnumcols = split(lines[1], '[\.\-]')
+    if len(lnumcols) == 4
+        let [start_lnum, start_col, end_lnum, end_col] = lnumcols
     else
-        let [start_lnum, end_lnum] = split(lines[1], '[\.\-]')
+        let [start_lnum, end_lnum] = lnumcols
         let [start_col, end_col] = [0, 0]
     endif
     let lines = lines[2]
