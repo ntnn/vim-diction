@@ -166,9 +166,15 @@ function diction#fill_list(qf)
     if a:qf
         call setqflist([])
         call setqflist(result)
+        if get(g:, 'diction_open_window', 1)
+            copen
+        endif
     else
         call setloclist(winnr(), [])
         call setloclist(winnr(), result)
+        if get(g:, 'diction_open_window', 1)
+            lopen
+        endif
     endif
 endfunction
 

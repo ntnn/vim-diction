@@ -32,6 +32,7 @@ Available mappings:
 Available options:
     diction_debug ............................. |'diction_debug'|
     diction_databases ......................... |'diction_databases'|
+    diction_open_window ....................... |'diction_open_window'|
 
 ------------------------------------------------------------------------------
                                                               *'diction_debug'*
@@ -66,6 +67,14 @@ Example: >
                 \ '~/gitted_conf/diction'
                 \ ]
 <
+------------------------------------------------------------------------------
+                                                        *'diction_open_window'*
+Value: numeric ~
+Default: unset (1) ~
+
+Open quickfix/location list window after executing |:Diction| and |:LDiction|
+respectively.
+
 ==============================================================================
  3. USAGE                                                       *diction-usage*
 

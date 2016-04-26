@@ -3,6 +3,7 @@
 * `DictionIndex`
 
 ## New Options:
+* `diction_open_window`
 
 ## To Dos:
 * Allow ranges to check for bad diction
