@@ -112,12 +112,13 @@ source and deeper explanation.
 If a whole database or group descends from one article a single reference at
 the top of the database or grouping is sufficient.
 
-Dictions are pattern-matched enclosed in |\<| and |\>|. To match a diction
-with whitespace like above include |\s| in the pattern.
+Dictions are pattern-matched with |'ignorecase'| (|/\c|) and enclose in |\<|
+and |\>|, |/\c|. To match a diction with whitespace use |\s|.
 See |pattern-overview| for more information.
 
 Annotations should be a single, short sentence giving context to when and how
 the diction is bad. If possible also an example.
+
 
 
 

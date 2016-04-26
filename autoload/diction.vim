@@ -107,7 +107,7 @@ function s:matchlist(pattern, bufnr)
     " list of matches in buffer, each match is a list [lnum, col]
     let matches = []
     let lines = getbufline(a:bufnr, 0, "$")
-    let pattern = '\<' . a:pattern . '\>'
+    let pattern = '\c\<' . a:pattern . '\>'
 
     for line in lines
         let col = match(line, pattern)
