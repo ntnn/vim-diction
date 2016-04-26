@@ -55,7 +55,7 @@ If neither 'diction_formatter' nor 'formatprg' are set, fmt from coreutils
 is used, if it is available.
 
 Example: >
-    let g:diction_formatter = 'fmt t'
+    let g:diction_formatter = 'fmt -t'
 <
 ------------------------------------------------------------------------------
                                                           *'diction_databases'*
