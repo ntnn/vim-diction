@@ -9,7 +9,15 @@ set cpo&vim
 
 function s:log(message)
     if get(g:, 'diction_debug', 0)
-        echomsg 'vim-diction:' . a:message
+        " check if message is a list
+        if type(a:message) == type([])
+            call s:log('List logged:')
+            for mess in a:message
+                echomsg 'vim-diction:  ' . mess
+            endfor
+        else
+            echomsg 'vim-diction:' . a:message
+        endif
     endif
 endfunction
 
