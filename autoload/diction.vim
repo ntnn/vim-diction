@@ -93,7 +93,6 @@ function diction#check_buffer(bufnr)
                         \ 'bufnr': a:bufnr,
                         \ 'lnum': matched[0],
                         \ 'col': matched[1],
-                        \ 'pattern': problem,
                         \ 'text': problem . ' -> ' . s:lookup[problem]
                         \ }
                         \ )
