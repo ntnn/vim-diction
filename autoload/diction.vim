@@ -57,7 +57,7 @@ function s:parse_db(database)
 
         if len(splitted) == 1
             let problem = line
-            let solution = 'bad wording'
+            let solution = 'Bad diction'
         elseif len(splitted) == 2
             let [problem, solution] = splitted
         else
