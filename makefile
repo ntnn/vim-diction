@@ -3,5 +3,5 @@ GZIPPED=vim-diction.tar.gz
 
 default: gzip
 
-gzip: $(FILES)
-	tar afvc $(GZIPPED) $^
+gzip:
+	tar afvc $(GZIPPED) $(FILES)
