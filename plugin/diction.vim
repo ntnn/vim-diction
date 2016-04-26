@@ -12,11 +12,15 @@ let g:loaded_diction = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-command Diction call diction#fill_list(1)
-nnoremap <silent> <Plug>Diction :Diction<cr>
+command Diction     call diction#fill_list(1, 0)
+command DictionAdd  call diction#fill_list(1, 1)
+nnoremap <silent>   <Plug>Diction :Diction<cr>
+nnoremap <silent>   <Plug>DictionAdd :DictionAdd<cr>
 
-command LDiction call diction#fill_list(0)
-nnoremap <silent> <Plug>LDiction :LDiction<cr>
+command LDiction    call diction#fill_list(0, 0)
+command LDictionAdd call diction#fill_list(0, 1)
+nnoremap <silent>   <Plug>LDiction :LDiction<cr>
+nnoremap <silent>   <Plug>LDictionAdd :LDictionAdd<cr>
 
 command DictionLog call diction#write_log_to_file()
 command DictionIndex call diction#reindex()

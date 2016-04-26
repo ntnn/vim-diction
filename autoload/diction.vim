@@ -161,17 +161,23 @@ function s:sort_matches(a, b)
     return a:a.col - a:b.col
 endfunction
 
-function diction#fill_list(qf)
+function diction#fill_list(qf, add)
     let result = diction#check_buffer(bufnr('%'))
+    if !a:add
+        if a:qf
+            call setqflist([])
+        else
+            call setqflist(winnr(), [])
+        endif
+    endif
+
     if a:qf
-        call setqflist([])
-        call setqflist(result)
+        call setqflist(result, 'a')
         if get(g:, 'diction_open_window', 1)
             copen
         endif
     else
-        call setloclist(winnr(), [])
-        call setloclist(winnr(), result)
+        call setloclist(winnr(), result, 'a')
         if get(g:, 'diction_open_window', 1)
             lopen
         endif

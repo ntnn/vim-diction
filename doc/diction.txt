@@ -28,6 +28,8 @@ Available mappings:
 
     <Plug>Diction ............................. |:Diction|
     <Plug>LDiction ............................ |:LDiction|
+    <Plug>DictionAdd .......................... |:DictionAdd|
+    <Plug>LDictionAdd ......................... |:LDictionAdd|
 
 Available options:
     diction_debug ............................. |'diction_debug'|
@@ -85,9 +87,17 @@ The following commands are available:
 Run diction on the current file and parse the output, displaying the result in
 the |quickfix| list.
 
+*:DictionAdd*
+
+Like |:Diction| but adds to the existing |quickfix| list.
+
 *:LDiction*
 
 Like |:Diction|, displaying the result in the |location-list|.
+
+*:LDictionAdd*
+
+Like :|DictionAdd|, displaying the result in the |location-list|.
 
 *:DictionLog*
 

@@ -1,13 +1,14 @@
 # Version: working
 ## New Commands:
 * `DictionIndex`
+* `DictionAdd`
+* `LDictionAdd`
 
 ## New Options:
 * `diction_open_window`
 
 ## To Dos:
 * Allow ranges to check for bad diction
-* Command to add to existing qf/loclist
 
 # Version: 2
 Rewrite. Doesn't use `diction` anymore.
