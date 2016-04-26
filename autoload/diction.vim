@@ -159,7 +159,7 @@ function s:sort_matches(a, b)
 endfunction
 
 function diction#fill_list(qf)
-    let result = diction#check_buffer(bufnr('.'))
+    let result = diction#check_buffer(bufnr('%'))
     if a:qf
         call setqflist([])
         call setqflist(result)
