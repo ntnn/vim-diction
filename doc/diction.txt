@@ -32,7 +32,6 @@ Available mappings:
 
 Available options:
     diction_debug ............................. |'diction_debug'|
-    diction_formatter ......................... |'diction_formatter'|
     diction_databases ......................... |'diction_databases'|
 
 ------------------------------------------------------------------------------
@@ -44,19 +43,6 @@ Print debug messages.
 
 Attention: Verbose and a lot.
 
-------------------------------------------------------------------------------
-                                                          *'diction_formatter'*
-Value: string ~
-Default: unset (`fmt -t` or &formatprg) ~
-
-External program to format long lines into readable output.
-
-If neither 'diction_formatter' nor 'formatprg' are set, fmt from coreutils
-is used, if it is available.
-
-Example: >
-    let g:diction_formatter = 'fmt -t'
-<
 ------------------------------------------------------------------------------
                                                           *'diction_databases'*
 Value: list ~

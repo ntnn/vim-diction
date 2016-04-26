@@ -8,7 +8,6 @@ by default.
 * `DictionLog`
 
 ## New Options:
-* `diction_formatter`
 * `diction_databases`
 
 ## To Dos:
