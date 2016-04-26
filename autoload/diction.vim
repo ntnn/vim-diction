@@ -139,8 +139,8 @@ function diction#fill_list(qf)
         call setqflist([])
         call setqflist(result)
     else
-        call setloclist(winnr('.'), [])
-        call setloclist(winnr('.'), result)
+        call setloclist(winnr(), [])
+        call setloclist(winnr(), result)
     endif
 endfunction
 
