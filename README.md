@@ -5,7 +5,8 @@ diction, noun:
 [source](http://www.merriam-webster.com/dictionary/diction)
 
 vim-diction parses databases, looks for bad diction and fills the
-quickfix or location list with explanations and suggestions.
+quickfix or location list with explanations and suggestions on how to
+improve the text.
 
 For more information read the documentation `:h diction.txt`.
 
