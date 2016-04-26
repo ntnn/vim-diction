@@ -106,17 +106,43 @@ function s:matchlist(pattern, bufnr)
     " list of matches in buffer, each match is a list [lnum, col]
     let matches = []
     let lines = getbufline(a:bufnr, 0, "$")
-    let pattern = '\c\<' . a:pattern . '\>'
 
-    for line in lines
+    if match(a:pattern, ' ') != -1
+        " if pattern contains a space the space has to be substituted
+        " for [:blank:]
+        let pattern = substitute(
+                    \   a:pattern,
+                    \   ' ',
+                    \   escape('\s\+', '\[]'),
+                    \   'g'
+                    \ )
+    else
+        " otherwise it is a single word and has to be handles as such
+        let pattern = '\<' . a:pattern . '\>'
+    endif
+    let pattern = '\c' . pattern
+
+    call s:log('Matching pattern "' . pattern . '"')
+
+    for lnum in range(len(lines))
+        " to allow multiline matches the current line has to be joined
+        " with the next line - but at the same time this might result in
+        " matches a line too early, so the resulting match column cannot
+        " be greater than the length of the current line
+        let line = lines[lnum]
+        let linelen = strlen(line)
+        let line = join([line,
+                    \    get(lines, lnum + 1, '')
+                    \   ])
         let col = match(line, pattern)
 
-        if col != -1
-            call s:log('Found match for ' . pattern . ' in ' . line)
-            call add(matches, [index(lines, line) + 1, col])
+        if col != -1 && col < linelen
+            call s:log('Found match in ' . lnum . ':' . col . ' ' . line)
+            call add(matches, [lnum + 1, col + 1])
         endif
     endfor
 
+    call s:log('Matched ' . len(matches) . ' occurences')
     return matches
 endfunction
 
