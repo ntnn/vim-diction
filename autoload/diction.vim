@@ -81,7 +81,7 @@ function s:parse_line(line) abort
         let nextclose = match(lines, ']')
         if nextopen == -1 || nextclose == -1
             " no [ or matching ] was found, returning ret
-            return l:ret
+            break
         endif
         call s:log('Next open: ' . nextopen . ' close: ' . nextclose)
 
@@ -130,13 +130,15 @@ function s:calculate_lnumcol(file, lnum, col, delta)
 
         if linelen > delta
             " delta is within the current line, search match and return
-            return [lnum, col + delta]
+            break
         endif
 
         let delta = delta - linelen
         let lnum += 1
         call s:log('Line not sufficiently long, delta: ' . delta . ' on line ' . lnum)
     endwhile
+
+    return [lnum, col + delta]
 endfunction
 
 let &cpo = s:save_cpo
