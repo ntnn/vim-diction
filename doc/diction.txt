@@ -89,4 +89,9 @@ the |quickfix| list.
 
 Like |:Diction|, displaying the result in the |location-list|.
 
+*:DictionLog*
+
+Saves output of |:messages| in 'vim-diction.log'. Intended to be used with
+|'diction_debug'|.
+
  vim:tw=78:ts=8:ft=help:norl:
