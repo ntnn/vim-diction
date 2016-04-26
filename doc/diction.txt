@@ -11,6 +11,10 @@ Help on using vim-diction                                             *diction*
 ==============================================================================
  1. INTRODUCTION                                                *diction-intro*
 
+This plugin needs 'diction' installed, this can either be done through
+your distributions' package manager or you can grab a copy here:
+https://www.gnu.org/software/diction/diction.html
+
 From the man page: >
     Diction finds all sentences in a document that contain phrases  from  a
     database  of  frequently  misused,  bad  or  wordy diction.  It further
