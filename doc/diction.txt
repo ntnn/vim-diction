@@ -88,7 +88,7 @@ Like |:Diction|, displaying the result in the |location-list|.
 
 *:DictionLog*
 
-Saves output of |:messages| in 'vim-diction.log'. Intended to be used with
+Saves output of |:messages| in `vim-diction.log`. Intended to be used with
 |'diction_debug'|.
 
 ==============================================================================
