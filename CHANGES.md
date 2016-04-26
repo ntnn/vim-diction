@@ -1,3 +1,13 @@
+# Version: working
+## New Commands:
+* `DictionIndex`
+
+## New Options:
+
+## To Dos:
+* Allow ranges to check for bad diction
+* Command to add to existing qf/loclist
+
 # Version: 2
 Rewrite. Doesn't use `diction` anymore.
 Using a similar database format (tsv) is simpler than parsing the output
