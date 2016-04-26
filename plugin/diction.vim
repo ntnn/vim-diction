@@ -1,6 +1,6 @@
 " vim-diction
 " Maintainer:	ntnn <nelo@wallus.de>
-" Version:	1
+" Version:	2
 " License:	MIT
 " Website:	https://github.com/ntnn/vim-diction
 

@@ -1,4 +1,4 @@
-# Version: working
+# Version: 2
 Rewrite. Doesn't use `diction` anymore.
 Using a similar database format (tsv) is simpler than parsing the output
 of diction and also enables vim-diction to ship with multiple databases
