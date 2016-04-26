@@ -11,4 +11,4 @@ For more information read the documentation `:h diction.txt`.
 
 Screenshot:
 
-![vim-diction in action](https://cloud.githubusercontent.com/assets/10514301/14765074/ec91f4ca-09d0-11e6-8dd8-f4ecee2054b5.png)
+![vim-diction in action](https://cloud.githubusercontent.com/assets/10514301/14812812/2029fbb4-0b9f-11e6-8aac-4abe5223ad39.png)
