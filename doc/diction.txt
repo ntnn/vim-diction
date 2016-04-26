@@ -12,7 +12,7 @@ Help on using vim-diction                                             *diction*
 ==============================================================================
  1. INTRODUCTION                                                *diction-intro*
 
- diction, noun: >
+Diction, noun: >
     choice of words especially with regard to correctness, clearness, or effectiveness
 
     source: Merriam-Webster, 2016
@@ -94,7 +94,7 @@ Saves output of |:messages| in 'vim-diction.log'. Intended to be used with
 ==============================================================================
  4. DATABASE LAYOUT                                          *diction-database*
 
-The databases are tsv (tab separated values) files with one or two colums per
+The databases are tsv (tab separated values) files with one or two columns per
 line.
 
 Every line in a database has either one or two values or is a comment:
@@ -107,7 +107,7 @@ Comments are ignored by vim-diction. The first value is the diction to match
 and the second the explanation and/or suggestion.
 
 A diction should always come with some a suggestion or explanation and
-also be accompanied by a commented reference (hyperlink, book reference,
+also be accompanied by a commented reference (Hyperlink, book reference,
 et cetera) to the source and deeper explanation.
 
 Dictions are pattern-matched enclosed in |\<| and |\>|. To match a diction
