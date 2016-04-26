@@ -87,26 +87,31 @@ function s:parse_line(line) abort
     while !empty(lines)
         let nextopen = match(lines, '[')
         let nextclose = match(lines, ']')
-        if nextopen == -1 || nextclose == -1
-            " no [ or matching ] was found, returning ret
-            break
+        if nextclose > nextopen
+            " jump over non-matching brackets
+            if nextopen == -1 || nextclose == -1
+                " no [ or matching ] was found, returning ret
+                break
+            endif
+            call s:log('Next open: ' . nextopen . ' close: ' . nextclose)
+
+            let [cur_lnum, cur_col] = s:calculate_lnumcol(file, cur_lnum, cur_col, nextopen)
+            let annotation = lines[nextopen + 1:nextclose - 1]
+            call s:log(annotation)
+
+            if get(g:, 'diction_formatter') != ''
+                let output = split(system(g:diction_formatter, annotation), '\n')
+            else
+                let output = [annotation]
+            endif
+            call s:log(output)
+
+            call add(ret, printf("%s:%d:%d:%s", file, cur_lnum, cur_col, output[0]))
+            call remove(output, 0)
+            for line in output
+                call add(ret, line)
+            endfor
         endif
-        call s:log('Next open: ' . nextopen . ' close: ' . nextclose)
-
-        let [cur_lnum, cur_col] = s:calculate_lnumcol(file, cur_lnum, cur_col, nextopen)
-        let annotation = lines[nextopen + 1:nextclose - 1]
-
-        if get(g:, 'diction_formatter') != ''
-            let output = split(system(g:diction_formatter, annotation), '\n')
-        else
-            let output = [annotation]
-        endif
-
-        call add(ret, printf("%s:%d:%d:%s", file, cur_lnum, cur_col, output[0]))
-        call remove(output, 0)
-        for line in output
-            call add(ret, line)
-        endfor
 
         let lines = lines[nextclose + 2:]
         "                           +- cut off the ] and space that'd be left over
