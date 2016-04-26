@@ -8,6 +8,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:lookup = {}
+let s:plugin_path = expand('<sfile>:p:h:h')
 
 function s:log(message)
     let prefix = 'vim-diction:' . expand('<sfile>') . ':'
@@ -38,13 +39,19 @@ function diction#write_log_to_file()
     call writefile(mess, 'vim-diction.log', '')
 endfunction
 
-function s:parse_db(database)
+function s:parse_db(db_name)
+    let db_path = expand(a:db_name)
+    if !filereadable(db_path)
+        let db_path = s:plugin_path . '/database/' . a:db_name
+    endif
+
     try
-        let db_lines = readfile(a:database)
+        let db_lines = readfile(db_path)
     catch /E484/
         call s:error('Database ' . a:database . ' does not exist.')
         return
     endtry
+
     let db = {}
 
     for line in db_lines
@@ -71,15 +78,16 @@ function s:parse_db(database)
     return db
 endfunction
 
-function diction#fill_lookup()
-    for db in get(g:, 'diction_databases', [])
+function diction#reindex()
+    let s:lookup = {}
+    for db in get(g:, 'diction_databases', ['en', 'tech_words_to_avoid'])
         call extend(s:lookup, s:parse_db(db))
     endfor
 endfunction
 
 function diction#check_buffer(bufnr)
     if empty(s:lookup)
-        call diction#fill_lookup()
+        call diction#reindex()
     endif
 
     " list of matches, each match is a dictionary, that setqflist()

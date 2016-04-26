@@ -46,14 +46,24 @@ Attention: Verbose and a lot.
 ------------------------------------------------------------------------------
                                                           *'diction_databases'*
 Value: list ~
-Default: unset (shipped databases) ~
+Default: unset (['en', 'tech_words_to_avoid']) ~
 
-List of databases to parse. vim-diction always parses shipped databases in
-alphabetical order first and then user-defined.in the given order.
+List of databases to parse. By default vim-diction takes the shipped `en` and
+`tech_words_to_avoid` if |'diction_databases'| is unset.
+The databases are parsed in the order in which they are listed, if a diction
+appears in multiple databases the last parsed database containing it wins.
+
+An entry can either be an absolute path, a relative path or a name. In case of
+a name vim-diction looks in the directory for shipped databases for a database
+with the given name.
+
+If |'diction_databases'| is changed after the first index |:DictionIndex| has
+to be run to parse the databases again.
 
 Example: >
     let g:diction_databases = [
                 \ '/usr/share/diction/en',
+                \ 'tech_words_to_avoid',
                 \ '~/gitted_conf/diction'
                 \ ]
 <
@@ -76,6 +86,11 @@ Like |:Diction|, displaying the result in the |location-list|.
 
 Saves output of |:messages| in `vim-diction.log`. Intended to be used with
 |'diction_debug'|.
+
+*:DictionIndex*
+
+Reindex the databases in |'diction_databases'|.
+
 
 ==============================================================================
  4. DATABASE                                                 *diction-database*
