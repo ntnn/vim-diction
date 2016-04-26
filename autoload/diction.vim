@@ -23,7 +23,7 @@ endfunction
 
 function diction#writelog()
     redir => mess
-        messages
+        silent messages
     redir END
     let mess = split(mess, '\n')
     call writefile(mess, 'vim-diction.log', '')
