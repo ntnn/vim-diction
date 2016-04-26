@@ -48,8 +48,8 @@ function s:parse_db(database)
     let db = {}
 
     for line in db_lines
-        if line[0] == '#'
-            " ignore comments
+        if line[0] == '#' || line == ''
+            " ignore comments and empty lines
             continue
         endif
 

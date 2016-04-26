@@ -103,8 +103,8 @@ Layout: >
     of\scourse	Explain why explicitly instead of implicitly. Also helps to avoid errors.
     simply
 <
-Comments are ignored by vim-diction. The first value is the diction to match
-and the second the explanation and/or suggestion.
+Comments and empty lines are ignored by vim-diction. The first value is the
+diction to match and the second the explanation and/or suggestion.
 
 A diction should always come with some a suggestion or explanation and
 also be accompanied by a commented reference (Hyperlink, book reference,
