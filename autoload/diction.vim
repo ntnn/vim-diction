@@ -13,6 +13,14 @@ function s:log(message)
     endif
 endfunction
 
+function diction#writelog()
+    redir => mess
+        messages
+    redir END
+    let mess = split(mess, '\n')
+    call writefile(mess, 'vim-diction.log', '')
+endfunction
+
 function diction#wrap(qf)
     " TODO: Allow ranges to pass those through to diction via stdin.
     "       In that case an offset has to be given to calculate_lnumcol

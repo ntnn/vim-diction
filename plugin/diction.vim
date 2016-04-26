@@ -36,5 +36,6 @@ command Diction call diction#wrap(1)
 nnoremap <silent> <Plug>Diction :Diction<cr>
 command LDiction call diction#wrap(0)
 nnoremap <silent> <Plug>LDiction :LDiction<cr>
+command DictionLog call diction#writelog()
 
 let &cpo = s:save_cpo
