@@ -111,10 +111,6 @@ function diction#check_buffer(bufnr)
 endfunction
 
 function s:matchlist(pattern, bufnr)
-    " list of matches in buffer, each match is a list [lnum, col]
-    let matches = []
-    let lines = getbufline(a:bufnr, 0, "$")
-
     if match(a:pattern, ' ') != -1
         " if pattern contains a space the space has to be substituted
         " for [:blank:]
@@ -130,27 +126,26 @@ function s:matchlist(pattern, bufnr)
     endif
     let pattern = '\c' . pattern
 
-    call s:log('Matching pattern "' . pattern . '"')
+    let pos_save = getcurpos()
+    call setpos('.', [a:bufnr, 1, 1, 0])
 
-    for lnum in range(len(lines))
-        " to allow multiline matches the current line has to be joined
-        " with the next line - but at the same time this might result in
-        " matches a line too early, so the resulting match column cannot
-        " be greater than the length of the current line
-        let line = lines[lnum]
-        let linelen = strlen(line)
-        let line = join([line,
-                    \    get(lines, lnum + 1, '')
-                    \   ])
-        let col = match(line, pattern)
+    let matches = []
 
-        if col != -1 && col < linelen
-            call s:log('Found match in ' . lnum . ':' . col . ' ' . line)
-            call add(matches, [lnum + 1, col + 1])
-        endif
-    endfor
+    let flags = 'Wz'
+    " W - don't wrap around at EOF
+    " z - start search at cursor col instead of zero
+
+    let m = searchpos(pattern, flags)
+    while m != [0, 0]
+        call s:log('Found match in ' . string(m))
+        call add(matches, m)
+        let m = searchpos(pattern, flags)
+    endwhile
 
     call s:log('Matched ' . len(matches) . ' occurences')
+
+    call setpos('.', pos_save)
+
     return matches
 endfunction
 
