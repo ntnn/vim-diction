@@ -1,4 +1,4 @@
-diction, noun:
+Diction, noun:
 
     choice of words especially with regard to correctness, clearness, or effectiveness
 
