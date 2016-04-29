@@ -1,4 +1,4 @@
-VERSION=2
+VERSION=3
 FILES=doc/diction.txt README.md LICENSE CHANGES.md $(wildcard database/*) $(wildcard **/*.vim)
 GZIPPED=vim-diction-$(VERSION).tar.gz
 

@@ -1,4 +1,10 @@
-# Version: working
+# Version: 3
+Major speed improvements (~8s on 400 lines down to less then half
+a second) by using `searchpos()` instead of `match()`.
+
+Use a dictionary instead of a simple, global list, with a buflocal and
+global variable to define the active set of databases.
+
 ## New Commands:
 * `DictionIndex`
 * `DictionAdd`
