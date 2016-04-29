@@ -432,7 +432,7 @@ nauseous	Synonym for "sickening", do not confuse with the adjective "sick" or th
 near by	near, near at hand, close by, hard by
 need for
 needless to say	(avoid and consider leaving out what follows)
-neither.*or	Should be followed by "nor" instead of "or".
+neither.\{-}[^n]or	Should be followed by "nor" instead of "or".
 new beginning	beginning
 new innovation	innovation
 nice	Use a more exact word.
