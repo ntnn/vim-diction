@@ -9,6 +9,7 @@ set cpo&vim
 
 let s:lookup = {}
 let s:plugin_path = expand('<sfile>:p:h:h')
+let s:messages = []
 
 function s:log(message)
     let prefix = 'vim-diction:' . expand('<sfile>') . ':'
@@ -18,9 +19,11 @@ function s:log(message)
             call s:log('List logged:')
             for mess in a:message
                 echomsg prefix . '  ' . mess
+                call add(s:messages, prefix . '  ' . mess)
             endfor
         else
             echomsg prefix . a:message
+            call add(s:messages, prefix . a:message)
         endif
     endif
 endfunction
@@ -29,13 +32,11 @@ function s:error(message)
     echohl Error
     echomsg  'vim-diction:' . expand('<sfile>') . ':' . a:message
     echohl None
+    call add(s:messages, 'vim-diction:' . expand('<sfile>') . ':' . a:message)
 endfunction
 
 function diction#write_log_to_file()
-    redir => mess
-        silent messages
-    redir END
-    let mess = split(mess, '\n')
+    call extend(mess, s:messages)
     call writefile(mess, 'vim-diction.log', '')
 endfunction
 
