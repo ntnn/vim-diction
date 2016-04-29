@@ -7,6 +7,10 @@ default: echo
 gzip:
 	tar afvc $(GZIPPED) $(FILES)
 
+version:
+	sed -i 's/\(Version:\t\)[[:digit:]]\+/\1$(VERSION)/' **/*.vim
+	sed -i 's/Version: working/Version: $(VERSION)/' CHANGES.md
+
 echo:
 	@echo Version: $(VERSION)
 	@echo Files: $(FILES)
