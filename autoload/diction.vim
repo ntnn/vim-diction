@@ -80,7 +80,7 @@ endfunction
 
 function diction#reindex()
     let s:lookup = {}
-    for db in get(g:, 'diction_databases', ['en', 'tech_words_to_avoid'])
+    for db in get(g:, 'diction_databases', ['en', 'en-tech_words_to_avoid'])
         call extend(s:lookup, s:parse_db(db))
     endfor
 endfunction
