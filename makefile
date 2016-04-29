@@ -1,4 +1,4 @@
-FILES=autoload/diction.vim doc/diction.txt plugin/diction.vim README.md LICENSE CHANGES.md $(wildcard database/*)
+FILES=doc/diction.txt README.md LICENSE CHANGES.md $(wildcard database/*) $(wildcard **/*.vim)
 GZIPPED=vim-diction.tar.gz
 
 default: gzip
