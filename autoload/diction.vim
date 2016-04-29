@@ -82,9 +82,43 @@ function s:parse_db(db_name)
     return db
 endfunction
 
+function s:get_active_set()
+    let setname = get(l:, 'diction_active_set',
+                \ get(g:, 'diction_active_set', 'default')
+                \ )
+
+    return get(g:diction_db_sets, setname, [])
+endfunction
+
+function diction#set_active_set(set)
+    if index(keys(g:diction_db_sets), a:set) == -1
+        call s:mess('error', 'Given set ' . a:set . ' not in defined sets')
+        return
+    endif
+    let g:diction_active_set = a:set
+    call diction#reindex()
+endfunction
+
+function diction#complete_db_sets(ArgLead, CmdLine, CursorPos)
+    let completions = []
+
+    if len(split(a:CmdLine, ' ')) > 1
+        " DictionSet only takes one argument
+        return []
+    endif
+
+    for name in keys(g:diction_db_sets)
+        if name =~ a:ArgLead
+            call add(completions, name)
+        endif
+    endfor
+
+    return completions
+endfunction
+
 function diction#reindex()
     let s:lookup = {}
-    for db in get(g:, 'diction_databases', ['en', 'en-tech_words_to_avoid'])
+    for db in s:get_active_set()
         call extend(s:lookup, s:parse_db(db))
     endfor
 endfunction

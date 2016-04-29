@@ -17,7 +17,7 @@ Diction, noun: >
 
     source: Merriam-Webster, 2016
 <
-vim-diction parses databases determined by |'diction_databases'|, looks
+vim-diction parses databases determined by |'diction_active_set'|, looks
 for bad diction and fills the quickfix list with explanations and
 suggestions.
 
@@ -33,7 +33,8 @@ Available mappings:
 
 Available options:
     diction_debug ............................. |'diction_debug'|
-    diction_databases ......................... |'diction_databases'|
+    diction_db_sets ........................... |'diction_db_sets'|
+    diction_active_set ........................ |'diction_active_set'|
     diction_open_window ....................... |'diction_open_window'|
 
 ------------------------------------------------------------------------------
@@ -46,14 +47,15 @@ Print debug messages.
 Attention: Verbose and a lot.
 
 ------------------------------------------------------------------------------
-                                                          *'diction_databases'*
-Value: list ~
-Default: unset (['en', 'en-tech_words_to_avoid']) ~
+                                                            *'diction_db_sets'*
+Value: dict ~
+Default: { 'default': [ 'en', 'en-tech_words_to_avoid'] } ~
 
-List of databases to parse. By default vim-diction takes the shipped `en` and
-`en-tech_words_to_avoid` if |'diction_databases'| is unset.
-The databases are parsed in the order in which they are listed, if a diction
-appears in multiple databases the last parsed database containing it wins.
+Dictionary of sets of databases to parse. By default vim-diction takes the
+shipped `en` and `en-tech_words_to_avoid` if |'diction_db_sets'| is unset.
+The databases are parsed in the order in which they are listed in the set, if
+a diction appears in multiple databases the last parsed database containing it
+wins.
 
 An entry can either be an absolute path, a relative path or a name. In case of
 a name vim-diction looks in the directory for shipped databases for a database
@@ -63,12 +65,30 @@ If |'diction_databases'| is changed after the first index |:DictionIndex| has
 to be run to parse the databases again.
 
 Example: >
-    let g:diction_databases = [
-                \ '/usr/share/diction/en',
-                \ 'en-tech_words_to_avoid',
-                \ '~/gitted_conf/diction'
-                \ ]
+    let g:diction_db_sets = {
+                \ 'default': [
+                \   '/usr/share/diction/en',
+                \   'en-tech_words_to_avoid',
+                \   '~/gitted_conf/diction'
+                \   ],
+                \ 'email': [
+                \   '~/gitted_conf/email_diction'
+                \   ]
+                \ }
 <
+------------------------------------------------------------------------------
+                                                        *'diction_active_set'*
+Value: string ~
+Default: 'default' ~
+Scope: buflocal ~
+
+Defines the active set to be used. If changed manually |:DictionIndex| has to
+be called. |:DictionSet| sets this value globally and reindexes automatically.
+
+vim-diction always looks for a buflocal definition, then for a global and uses
+`default` as fallback. This way different filetypes can have different
+database sets through |ftplugin| or |FileType|.
+
 ------------------------------------------------------------------------------
                                                         *'diction_open_window'*
 Value: numeric ~
@@ -107,6 +127,11 @@ Saves output of |:messages| in `vim-diction.log`. Intended to be used with
 *:DictionIndex*
 
 Reindex the databases in |'diction_databases'|.
+
+*:DictionSet*
+
+Define a new global default set with |'diction_default_set'| and reindex the
+databases.
 
 ==============================================================================
  4. DATABASE                                                 *diction-database*

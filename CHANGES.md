@@ -3,9 +3,15 @@
 * `DictionIndex`
 * `DictionAdd`
 * `LDictionAdd`
+* `DictionSet`
 
 ## New Options:
 * `diction_open_window`
+* `diction_db_sets`
+* `diction_active_set`
+
+## Removed Options:
+* `diction_databases`
 
 ## To Dos:
 * Allow ranges to check for bad diction
