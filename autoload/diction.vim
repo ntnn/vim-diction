@@ -48,7 +48,7 @@ function s:parse_db(db_name)
     try
         let db_lines = readfile(db_path)
     catch /E484/
-        call s:error('Database ' . a:database . ' does not exist.')
+        call s:error('Database ' . db_path . ' does not exist.')
         return
     endtry
 
