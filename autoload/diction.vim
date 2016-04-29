@@ -11,28 +11,27 @@ let s:lookup = {}
 let s:plugin_path = expand('<sfile>:p:h:h')
 let s:messages = []
 
-function s:log(message)
+function s:mess(level, message)
     let prefix = 'vim-diction:' . expand('<sfile>') . ':'
-    if get(g:, 'diction_debug', 0)
-        if type(a:message) == type([])
-            " check if message is a list
-            call s:log('List logged:')
-            for mess in a:message
-                echomsg prefix . '  ' . mess
-                call add(s:messages, prefix . '  ' . mess)
-            endfor
-        else
-            echomsg prefix . a:message
-            call add(s:messages, prefix . a:message)
-        endif
+    if type(a:message) == type([])
+        for mess in a:message
+            call s:mess(level, '  ' . mess)
+        endfor
+        return
+    else
+        let message = prefix . a:message
     endif
-endfunction
 
-function s:error(message)
-    echohl Error
-    echomsg  'vim-diction:' . expand('<sfile>') . ':' . a:message
-    echohl None
-    call add(s:messages, 'vim-diction:' . expand('<sfile>') . ':' . a:message)
+    if a:level == 'debug' && get(g:, 'diction_debug', 0)
+        echomsg message
+    elseif a:level == 'error'
+        echohl Error
+        echomsg message
+        echohl None
+    else
+        echomsg message
+    endif
+    call add(s:messages, message)
 endfunction
 
 function diction#write_log_to_file()
@@ -53,7 +52,7 @@ function s:parse_db(db_name)
     try
         let db_lines = readfile(db_path)
     catch /E484/
-        call s:error('Database ' . db_path . ' does not exist.')
+        call s:mess('error', 'Database ' . db_path . ' does not exist.')
         return
     endtry
 
@@ -73,7 +72,7 @@ function s:parse_db(db_name)
         elseif len(splitted) == 2
             let [problem, solution] = splitted
         else
-            call s:log('Line ' . index(db_lines, line)  . ':"' . line . '" does not match spec')
+            call s:mess('debug', 'Line ' . index(db_lines, line)  . ':"' . line . '" does not match spec')
             continue
         endif
 
@@ -130,6 +129,7 @@ function s:matchlist(pattern, bufnr)
         let pattern = '\<' . a:pattern . '\>'
     endif
     let pattern = '\c' . pattern
+    call s:mess('debug', 'Matching pattern "' . pattern . '"')
 
     let pos_save = getcurpos()
     call setpos('.', [a:bufnr, 1, 1, 0])
@@ -142,12 +142,12 @@ function s:matchlist(pattern, bufnr)
 
     let m = searchpos(pattern, flags)
     while m != [0, 0]
-        call s:log('Found match in ' . string(m))
+        call s:mess('debug', 'Found match in ' . string(m))
         call add(matches, m)
         let m = searchpos(pattern, flags)
     endwhile
 
-    call s:log('Matched ' . len(matches) . ' occurences')
+    call s:mess('debug', 'Matched ' . len(matches) . ' occurences')
 
     call setpos('.', pos_save)
 
