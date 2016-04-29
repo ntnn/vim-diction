@@ -36,6 +36,10 @@ function s:error(message)
 endfunction
 
 function diction#write_log_to_file()
+    let mess = [
+                \ 'Databases: ' . join(get(g:, 'diction_databases', [])),
+                \ 'Dictions: ' . len(keys(s:lookup)),
+                \ ]
     call extend(mess, s:messages)
     call writefile(mess, 'vim-diction.log', '')
 endfunction
