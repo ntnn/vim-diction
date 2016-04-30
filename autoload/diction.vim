@@ -418,7 +418,6 @@ function diction#fill_list(qf, add)
 endfunction
 
 function diction#test(...)
-    let s:testing = 1
     for testee in s:test_functions
         let tester = 's:' . testee . '_test'
         try
