@@ -485,7 +485,7 @@ function diction#test(...)
         let tester = 's:' . testee . '_test'
         try
             let Func = function(tester)
-            silent! call Func()
+            silent call Func()
         catch /E700/
             " Function does not exist
             call add(v:errors, 'Function ' . testee . ' is not covered')
