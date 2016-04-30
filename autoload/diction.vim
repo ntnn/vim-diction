@@ -435,7 +435,7 @@ function diction#fill_list(qf, add)
     "
     " qf: boolean, 1 if quickfix should be filled
     " add: boolean, 1 if the entries should be added
-    let result = diction#check_buffer(bufnr('%'))
+    let result = diction#check_buffer(bufname('%'))
     if !a:add
         if a:qf
             call setqflist([])
