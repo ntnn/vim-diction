@@ -21,6 +21,9 @@ version:
 	sed -i 's/\(Version:\t\)[[:digit:]]\+/\1$(VERSION)/' **/*.vim
 	sed -i 's/Version: working/Version: $(VERSION)/' CHANGES.md
 
+clean:
+	rm -f *.log
+
 echo:
 	@echo Version: $(VERSION)
 	@echo Files: $(FILES)
