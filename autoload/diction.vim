@@ -319,6 +319,22 @@ function s:check_buffer_test()
     call assert_equal(0,
                 \ diction#check_buffer('random_non_existant_file.tlsl'),
                 \ 'Non existant file checked')
+
+    let test_file = s:plugin_path . '/files/test.vim'
+    call assert_equal([{
+                \       'filename': test_file,
+                \       'lnum': 1,
+                \       'col': 25,
+                \       'text': 'entry without -> Bad diction'
+                \ },
+                \ {
+                \       'filename': test_file,
+                \       'lnum': 3,
+                \       'col': 14,
+                \       'text': 'entry with -> annotation'
+                \ }],
+                \ diction#check_buffer(test_file),
+                \ )
 endfunction
 
 call add(s:test_functions, 'matchlist')
@@ -331,13 +347,29 @@ function s:matchlist(pattern)
 
     let pattern = substitute(a:pattern, '\([[:alnum:]]\+\)', '\\<\1\\>', 'g')
     " enclose every word to be matched only as word
+    if !exists('b:diction_whitespace_replace')
+        let characters = '[:blank:]\r\n'
+
+        let middlecomment = matchstr(&comments, 'm.\{-}:.\{-},')
+        if !empty(middlecomment)
+            " cut off trailing comma
+            let middlecomment = substitute(middlecomment, ',$', '', '')
+            " cut off identifier from comments
+            let middlecomment = split(middlecomment, ':')[1]
+            " cut off whitespace
+            let middlecomment = substitute(middlecomment, '\s\+', '', 'g')
+            let characters .= middlecomment
+        endif
+
+        let b:diction_whitespace_replace = escape('[' . characters . ']\+', '\[]')
+    endif
     if match(pattern, ' ') != -1
         " if pattern contains a space the space has to be substituted
         " for [:blank:] (tabs and spaces) and \n\r (newlines)
         let pattern = substitute(
                     \   pattern,
                     \   ' ',
-                    \   escape('[[:blank:]\r\n]\+', '\[]'),
+                    \   b:diction_whitespace_replace,
                     \   'g'
                     \ )
     endif
@@ -374,6 +406,12 @@ function s:matchlist_test()
     exec 'edit ' . test_file
 
     call assert_equal([ [1, 23], [3, 12]],
+                \ s:matchlist('entry'))
+
+    let test_file = s:plugin_path . '/files/test.vim'
+    silent exec 'edit ' . test_file
+
+    call assert_equal([ [1, 25], [3, 14]],
                 \ s:matchlist('entry'))
 endfunction
 
