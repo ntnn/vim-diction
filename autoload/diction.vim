@@ -27,6 +27,7 @@ function s:mess(level, message)
     elseif a:level == 'error'
         echohl Error
         echomsg message
+        let v:errmsg = a:message
         echohl None
     else
         echomsg message
