@@ -84,7 +84,7 @@ function s:parse_db(db_name)
 endfunction
 
 function s:get_active_set()
-    let setname = get(l:, 'diction_active_set',
+    let setname = get(b:, 'diction_active_set',
                 \ get(g:, 'diction_active_set', 'default')
                 \ )
 
