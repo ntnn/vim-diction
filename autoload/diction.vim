@@ -440,8 +440,9 @@ function diction#test(...)
         endfor
 
         if !empty(a:000)
-            call writefile(v:errors, 'errors.log')
-            quit
+            " intended for travis build, quits with errno on detected
+            " errors
+            cquit
         endif
     endif
 endfunction
