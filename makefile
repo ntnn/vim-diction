@@ -7,6 +7,10 @@ default: test
 test:
 	vim -u test.vim
 
+testversion:
+	vim --version
+	vim -u test.vim
+
 gzip:
 	tar afvc $(GZIPPED) $(FILES)
 

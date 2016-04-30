@@ -5,4 +5,4 @@ notifications:
     on_success: never
 install:
 - "git clone https://github.com/vim/vim vim && pushd vim && make && sudo make install && popd"
-script: make test
+script: make testversion
