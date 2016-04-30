@@ -460,6 +460,7 @@ endfunction
 function s:fill_list_test()
     let g:diction_active_set = 'default'
     let g:diction_db_sets = { 'default': ['test'] }
+    let g:diction_open_window = 0
     let test_file = s:plugin_path . '/files/test.txt'
     exec 'edit ' . test_file
 
