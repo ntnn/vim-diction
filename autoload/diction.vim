@@ -299,7 +299,6 @@ function s:check_buffer_test()
     let g:diction_db_sets = {'test': ['test']}
     let g:diction_active_set = 'test'
     let test_file = s:plugin_path . '/files/test.txt'
-    call assert_true(filereadable(test_file), 'File with test text not readable or does not exist')
 
     call assert_equal([{
                 \       'filename': test_file,
