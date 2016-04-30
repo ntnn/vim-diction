@@ -367,6 +367,14 @@ function s:matchlist(pattern)
     return matches
 endfunction
 
+function s:matchlist_test()
+    let test_file = s:plugin_path . '/files/test.txt'
+    exec 'edit ' . test_file
+
+    call assert_equal([ [1, 23], [3, 12]],
+                \ s:matchlist('entry'))
+endfunction
+
 call add(s:test_functions, 'sort_matches')
 function s:sort_matches(a, b)
     " Sort function to sort setqflist()-compatible entries via sort()
@@ -387,6 +395,38 @@ function s:sort_matches(a, b)
 
     return a:a.col - a:b.col
 endfunction
+
+function s:sort_matches_test()
+    let test = [ {
+                \   'filename': 'a',
+                \   'lnum': 2,
+                \   'col': 2
+                \ }, {
+                \   'filename': 'a',
+                \   'lnum': 1,
+                \   'col': 1,
+                \ }, {
+                \   'filename': 'b',
+                \   'lnum': 3,
+                \   'col':  3,
+                \ } ]
+    let correct = [ {
+                \   'filename': 'a',
+                \   'lnum': 1,
+                \   'col': 1
+                \ }, {
+                \   'filename': 'a',
+                \   'lnum': 2,
+                \   'col': 2,
+                \ }, {
+                \   'filename': 'b',
+                \   'lnum': 3,
+                \   'col':  3,
+                \ } ]
+
+    let test = sort(test, 's:sort_matches')
+    call assert_equal(correct, test)
+endfunction()
 
 call add(s:test_functions, 'fill_list')
 function diction#fill_list(qf, add)
@@ -415,6 +455,29 @@ function diction#fill_list(qf, add)
             lopen
         endif
     endif
+endfunction
+
+function s:fill_list_test()
+    let g:diction_active_set = 'default'
+    let g:diction_db_sets = { 'default': ['test'] }
+    let test_file = s:plugin_path . '/files/test.txt'
+    exec 'edit ' . test_file
+
+    " replace current qflist
+    call diction#fill_list(1, 0)
+    call assert_equal(2, len(getqflist()))
+
+    " add to existing qflist
+    call diction#fill_list(1, 1)
+    call assert_equal(4, len(getqflist()))
+
+    " replace current loclist
+    call diction#fill_list(0, 0)
+    call assert_equal(2, len(getloclist(0)))
+
+    " add to existing loclist
+    call diction#fill_list(0, 1)
+    call assert_equal(4, len(getloclist(0)))
 endfunction
 
 function diction#test(...)
