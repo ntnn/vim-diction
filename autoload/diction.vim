@@ -12,7 +12,14 @@ let s:plugin_path = expand('<sfile>:p:h:h')
 let s:messages = []
 
 function s:mess(level, message)
+    " Logger function.
+    "
+    " level: log level, either 'debug' or 'error'. Other is printed
+    "   verbatim
+    " message: Message to print. String or list.
+
     let prefix = 'vim-diction:' . expand('<sfile>') . ':'
+
     if type(a:message) == type([])
         for mess in a:message
             call s:mess(level, '  ' . mess)
@@ -36,6 +43,7 @@ function s:mess(level, message)
 endfunction
 
 function diction#write_log_to_file()
+    " Write messages to 'vim-diction.log'
     let mess = [
                 \ 'Databases: ' . join(get(g:, 'diction_databases', [])),
                 \ 'Dictions: ' . len(keys(s:lookup)),
@@ -45,8 +53,19 @@ function diction#write_log_to_file()
 endfunction
 
 function s:parse_db(db_name)
+    " Parses a database.
+    "
+    " db_name: db_name can be one of the following:
+    "   1. full or relative path
+    "   2. name
+    "   In case of a name the database is assumed to be shipped.
+    " returns a dictionary or 0 if the database does not exist or is not
+    "   readable
+
     let db_path = expand(a:db_name)
     if !filereadable(db_path)
+        " The parameter does not point to a readable file, assuming
+        " shipped database
         let db_path = s:plugin_path . '/database/' . a:db_name
     endif
 
@@ -84,6 +103,10 @@ function s:parse_db(db_name)
 endfunction
 
 function s:get_active_set()
+    " Retrieves the name of the active set name (buflocal -> global ->
+    " 'default') and then returns the set associated with that name.
+    "
+    " returns list of databases
     let setname = get(b:, 'diction_active_set',
                 \ get(g:, 'diction_active_set', 'default')
                 \ )
@@ -92,6 +115,9 @@ function s:get_active_set()
 endfunction
 
 function diction#set_active_set(set)
+    " Sets the active set and reindexes.
+    "
+    " set: New active set.
     if index(keys(g:diction_db_sets), a:set) == -1
         call s:mess('error', 'Given set ' . a:set . ' not in defined sets')
         return
@@ -101,6 +127,8 @@ function diction#set_active_set(set)
 endfunction
 
 function diction#complete_db_sets(ArgLead, CmdLine, CursorPos)
+    " Completion function. See :command-completion-customlist for
+    " details
     let completions = []
 
     if len(split(a:CmdLine, ' ')) > 1
@@ -118,6 +146,7 @@ function diction#complete_db_sets(ArgLead, CmdLine, CursorPos)
 endfunction
 
 function diction#reindex()
+    " Reindexes the current set of databases
     let s:lookup = {}
     for db in s:get_active_set()
         call extend(s:lookup, s:parse_db(db))
@@ -125,6 +154,15 @@ function diction#reindex()
 endfunction
 
 function diction#check_buffer(filepath)
+    " Checks given file for dictions. The file will be opened if it is
+    " not loaded.
+    "
+    " filepath: Name or path for a file. If empty the current buffer is
+    "   used. The name is globbed in &path.
+    " returns a list of dictionaries with matches setqflist() would
+    "   accept with filename set.
+
+    " save current position
     let sav_pos = getcurpos()
     let sav_buf = bufnr('%')
 
@@ -154,7 +192,6 @@ function diction#check_buffer(filepath)
     " would accept
     let matches = []
 
-
     for problem in keys(s:lookup)
         for matched in s:matchlist(problem)
             call add(matches, {
@@ -162,8 +199,7 @@ function diction#check_buffer(filepath)
                         \ 'lnum': matched[0],
                         \ 'col': matched[1],
                         \ 'text': problem . ' -> ' . s:lookup[problem]
-                        \ }
-                        \ )
+                        \ })
         endfor
     endfor
 
@@ -173,6 +209,12 @@ function diction#check_buffer(filepath)
 endfunction
 
 function s:matchlist(pattern)
+    " Searches the current buffer from top to bottom for a pattern. The
+    " pattern will be modified.
+    "
+    " pattern: pattern to search
+    " returns a list of matches, each match is a list [lnum, col]
+
     if match(a:pattern, ' ') != -1
         " if pattern contains a space the space has to be substituted
         " for [:blank:]
@@ -234,6 +276,11 @@ function s:sort_matches(a, b)
 endfunction
 
 function diction#fill_list(qf, add)
+    " Fills the quickfix or location list with entries from
+    " check_buffer()
+    "
+    " qf: boolean, 1 if quickfix should be filled
+    " add: boolean, 1 if the entries should be added
     let result = diction#check_buffer(bufnr('%'))
     if !a:add
         if a:qf
