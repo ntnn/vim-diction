@@ -5,11 +5,11 @@ GZIPPED=vim-diction-$(VERSION).tar.gz
 default: test
 
 test:
-	vim -u test.vim
+	vim -u files/test.vimrc
 
 testversion:
 	vim --version
-	vim -u test.vim
+	vim -u files/test.vimrc
 
 gzip:
 	tar afvc $(GZIPPED) $(FILES)
