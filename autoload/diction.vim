@@ -441,7 +441,7 @@ function diction#test(...)
 
         if !empty(a:000)
             call writefile(v:errors, 'errors.log')
-            cquit
+            quit
         endif
     endif
 endfunction
