@@ -345,8 +345,9 @@ function s:matchlist(pattern)
     " pattern: pattern to search
     " returns a list of matches, each match is a list [lnum, col]
 
-    let pattern = substitute(a:pattern, '\([[:alnum:]]\+\)', '\\<\1\\>', 'g')
     " enclose every word to be matched only as word
+    let pattern = substitute(a:pattern, '\([[:alnum:]]\+\)', '\\<\1\\>', 'g')
+
     if !exists('b:diction_whitespace_replace')
         let characters = '[:blank:]\r\n'
 
