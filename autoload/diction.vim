@@ -508,6 +508,9 @@ function diction#test(...)
             cquit
         endif
     endif
+    if !empty(a:000)
+        quit
+    endif
 endfunction
 
 let &cpo = s:save_cpo
