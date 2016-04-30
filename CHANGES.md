@@ -1,3 +1,13 @@
+# Version: working
+Add unit tests
+
+## New Commands:
+
+## New Options:
+
+## To Dos:
+* Allow ranges to check for bad diction
+
 # Version: 3
 Major speed improvements (~8s on 400 lines down to less then half
 a second) by using `searchpos()` instead of `match()`.
