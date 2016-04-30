@@ -440,7 +440,7 @@ function diction#fill_list(qf, add)
         if a:qf
             call setqflist([])
         else
-            call setqflist(winnr(), [])
+            call setloclist(winnr(), [])
         endif
     endif
 
