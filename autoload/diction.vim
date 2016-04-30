@@ -124,8 +124,29 @@ function diction#reindex()
     endfor
 endfunction
 
-function diction#check_buffer(bufnr)
+function diction#check_buffer(filepath)
+    let sav_pos = getcurpos()
+    let sav_buf = bufnr('%')
+
+    if empty(a:filepath)
+        " use current buffer if filepath is empty
+        let filepath = bufname('%')
+    else
+        " glob for file in &path, error if it doesn't exist
+        let filepath = globpath(&path, a:filepath, 0, 1)
+        if empty(filepath)
+            call s:mess('error', 'Filepath ' . a:filepath . ' globbed to empty path')
+            return
+        endif
+        let filepath = filepath[0]
+
+        " save the current position and open file
+        let bufnr = bufnr(filepath, 1)
+        exec 'b ' . bufnr
+    endif
+
     if empty(s:lookup)
+        " fill lookup table if the databases weren't indexed yet
         call diction#reindex()
     endif
 
@@ -135,9 +156,9 @@ function diction#check_buffer(bufnr)
 
 
     for problem in keys(s:lookup)
-        for matched in s:matchlist(problem, a:bufnr)
+        for matched in s:matchlist(problem)
             call add(matches, {
-                        \ 'bufnr': a:bufnr,
+                        \ 'filename': filepath,
                         \ 'lnum': matched[0],
                         \ 'col': matched[1],
                         \ 'text': problem . ' -> ' . s:lookup[problem]
@@ -146,10 +167,12 @@ function diction#check_buffer(bufnr)
         endfor
     endfor
 
+    exe 'b ' . sav_buf
+    call setpos('.', sav_pos)
     return sort(matches, function('s:sort_matches'))
 endfunction
 
-function s:matchlist(pattern, bufnr)
+function s:matchlist(pattern)
     if match(a:pattern, ' ') != -1
         " if pattern contains a space the space has to be substituted
         " for [:blank:]
@@ -164,10 +187,14 @@ function s:matchlist(pattern, bufnr)
         let pattern = '\<' . a:pattern . '\>'
     endif
     let pattern = '\c' . pattern
-    call s:mess('debug', 'Matching pattern "' . pattern . '"')
+    call s:mess('debug', 'Matching pattern "' . pattern . '" in file ' . bufname('%'))
 
-    let pos_save = getcurpos()
-    call setpos('.', [a:bufnr, 1, 1, 0])
+    call setpos('.', [0, 1, 1, 0])
+    "            |    |  |  |  +- offset
+    "            |    |  |  +- first col
+    "            |    |  +- first line
+    "            |    +- current buffer
+    "            +- set cursor
 
     let matches = []
 
@@ -183,15 +210,20 @@ function s:matchlist(pattern, bufnr)
     endwhile
 
     call s:mess('debug', 'Matched ' . len(matches) . ' occurences')
-
-    call setpos('.', pos_save)
-
     return matches
 endfunction
 
 function s:sort_matches(a, b)
-    if 0 != a:a.bufnr - a:b.bufnr
-        return a:a.bufnr - a:b.bufnr
+    " Sort function to sort setqflist()-compatible entries via sort()
+    "
+    " a, b: entries
+    "
+    " returns: 1 if a should be ordered later in the list, -1 for
+    "   earlier, 0 for equal
+    if a:a.filename > a:b.filename
+        return 1
+    elseif a:b.filename < a:b.filename
+        return -1
     endif
 
     if 0 != a:a.lnum - a:b.lnum
