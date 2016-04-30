@@ -267,7 +267,7 @@ function diction#check_buffer(filepath)
 
         " save the current position and open file
         let bufnr = bufnr(filepath, 1)
-        exec 'b ' . bufnr
+        silent exec 'b ' . bufnr
     endif
 
     if empty(s:lookup)
@@ -403,7 +403,7 @@ endfunction
 
 function s:matchlist_test()
     let test_file = s:plugin_path . '/files/test.txt'
-    exec 'edit ' . test_file
+    silent exec 'edit ' . test_file
 
     call assert_equal([ [1, 23], [3, 12]],
                 \ s:matchlist('entry'))
@@ -502,7 +502,7 @@ function s:fill_list_test()
     let g:diction_db_sets = { 'default': ['test'] }
     let g:diction_open_window = 0
     let test_file = s:plugin_path . '/files/test.txt'
-    exec 'edit ' . test_file
+    silent exec 'edit ' . test_file
 
     " replace current qflist
     call diction#fill_list(1, 0)
@@ -526,7 +526,7 @@ function diction#test(...)
         let tester = 's:' . testee . '_test'
         try
             let Func = function(tester)
-            silent call Func()
+            call Func()
         catch /E700/
             " Function does not exist
             call add(v:errors, 'Function ' . testee . ' is not covered')
