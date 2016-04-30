@@ -23,7 +23,7 @@ function s:mess(level, message)
 
     if type(a:message) == type([])
         for mess in a:message
-            call s:mess(level, '  ' . mess)
+            call s:mess(a:level, '  ' . mess)
         endfor
         return
     else
