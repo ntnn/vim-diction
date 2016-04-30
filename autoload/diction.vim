@@ -30,8 +30,10 @@ function s:mess(level, message)
         let message = prefix . a:message
     endif
 
-    if a:level == 'debug' && get(g:, 'diction_debug', 0)
-        echomsg message
+    if a:level == 'debug'
+        if get(g:, 'diction_debug', 0)
+            echomsg message
+        endif
     elseif a:level == 'error'
         echohl Error
         echomsg message
