@@ -187,11 +187,6 @@ function diction#complete_db_sets(ArgLead, CmdLine, CursorPos)
     " details
     let completions = []
 
-    if len(split(a:CmdLine, ' ')) > 1
-        " DictionSet only takes one argument
-        return []
-    endif
-
     for name in keys(g:diction_db_sets)
         if name =~ a:ArgLead
             call add(completions, name)
