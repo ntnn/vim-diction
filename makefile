@@ -11,6 +11,9 @@ testversion:
 	vim --version
 	vim -u files/test.vimrc
 
+time:
+	time vim -u files/time.vimrc files/pride_and_prejudice.txt +Diction +qa
+
 gzip:
 	tar afvc $(GZIPPED) $(FILES)
 
