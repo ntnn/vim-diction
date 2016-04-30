@@ -327,20 +327,20 @@ function s:matchlist(pattern)
     " pattern: pattern to search
     " returns a list of matches, each match is a list [lnum, col]
 
-    if match(a:pattern, ' ') != -1
+    let pattern = substitute(a:pattern, '\([[:alnum:]]\+\)', '\\<\1\\>', 'g')
+    " enclose every word to be matched only as word
+    if match(pattern, ' ') != -1
         " if pattern contains a space the space has to be substituted
-        " for [:blank:]
+        " for [:blank:] (tabs and spaces) and \n\r (newlines)
         let pattern = substitute(
-                    \   a:pattern,
+                    \   pattern,
                     \   ' ',
-                    \   escape('\s\+', '\[]'),
+                    \   escape('[[:blank:]\r\n]\+', '\[]'),
                     \   'g'
                     \ )
-    else
-        " otherwise it is a single word and has to be handles as such
-        let pattern = '\<' . a:pattern . '\>'
     endif
     let pattern = '\c' . pattern
+    " case insensitive
     call s:mess('debug', 'Matching pattern "' . pattern . '" in file ' . bufname('%'))
 
     call setpos('.', [0, 1, 1, 0])
