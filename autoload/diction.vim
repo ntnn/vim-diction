@@ -301,15 +301,15 @@ function s:check_buffer_test()
 
     call assert_equal([{
                 \       'filename': test_file,
-                \       'lnum': 3,
-                \       'col': 12,
-                \       'text': 'entry with -> annotation'
-                \ },
-                \ {
-                \       'filename': test_file,
                 \       'lnum': 1,
                 \       'col': 23,
                 \       'text': 'entry without -> Bad diction'
+                \ },
+                \ {
+                \       'filename': test_file,
+                \       'lnum': 3,
+                \       'col': 12,
+                \       'text': 'entry with -> annotation'
                 \ }],
                 \ diction#check_buffer(test_file),
                 \ )
