@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ntnn/vim-diction.svg?branch=master)](https://travis-ci.org/ntnn/vim-diction)
+
 Diction, noun:
 
     choice of words especially with regard to correctness, clearness, or effectiveness
