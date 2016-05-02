@@ -1,10 +1,6 @@
-# Version: working
+# Version: 4
 Add unit tests
 Works over newlines in code comments
-
-## New Commands:
-
-## New Options:
 
 ## To Dos:
 * Allow ranges to check for bad diction
