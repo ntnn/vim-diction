@@ -19,3 +19,4 @@ Screenshot:
 Mirrors:
 * https://github.com/ntnn/vim-diction
 * https://gitlab.com/ntnn/vim-diction
+* https://bitbucket.org/ntnn/vim-diction
